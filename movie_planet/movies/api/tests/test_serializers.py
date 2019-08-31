@@ -1,11 +1,7 @@
 import pytest
 from rest_framework.exceptions import ErrorDetail
 
-from movie_planet.movies.api.serializers import (
-    CommentSerializer,
-    MovieSerializer,
-    TopMovieSerializer,
-)
+from movie_planet.movies.api.serializers import CommentSerializer, MovieSerializer, TopMovieSerializer
 
 pytestmark = pytest.mark.django_db
 

@@ -52,6 +52,5 @@ EMAIL_BACKEND = "django.core.mail.backends.locmem.EmailBackend"
 # Your stuff...
 # ------------------------------------------------------------------------------
 
-OMDB_API_KEY = 'test api key'
-OMDB_URL = 'http://testutl'
-
+OMDB_API_KEY = "test api key"
+OMDB_URL = "http://testutl"

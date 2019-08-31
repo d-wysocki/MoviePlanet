@@ -1,14 +1,12 @@
+from datetime import datetime, timedelta
+
 import pytest
 from mock import patch
-from movie_planet.movies.api.views import MoviesViewSet, CommentsViewSet, TopViewSet
 from rest_framework.exceptions import ErrorDetail
-from movie_planet.movies.factories import (
-    CommentFactory,
-    MovieFactory,
-    create_movies_with_rank,
-)
+
 from movie_planet.movies.api.serializers import CommentSerializer, TopMovieSerializer
-from datetime import datetime, timedelta
+from movie_planet.movies.api.views import CommentsViewSet, MoviesViewSet, TopViewSet
+from movie_planet.movies.factories import CommentFactory, MovieFactory, create_movies_with_rank
 from movie_planet.movies.utils import prepare_date_range
 
 pytestmark = pytest.mark.django_db
@@ -184,18 +182,14 @@ class TestTopViewSet:
         view = TopViewSet()
         created_at_date = str(created_at.date())
 
-        result = view.get_queryset(
-            prepare_date_range(created_at_date, str(to_date))
-        )
+        result = view.get_queryset(prepare_date_range(created_at_date, str(to_date)))
 
         assert movie_1.id in result
         assert movie_2.id in result
 
         view = TopViewSet()
 
-        result = view.get_queryset(
-            prepare_date_range(created_at_date, created_at_date)
-        )
+        result = view.get_queryset(prepare_date_range(created_at_date, created_at_date))
 
         assert movie_1.id not in result
         assert movie_2.id in result

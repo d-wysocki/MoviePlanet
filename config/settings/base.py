@@ -2,10 +2,9 @@
 Base settings to build other settings files upon.
 """
 
-import environ
 import os
 
-
+import environ
 
 ROOT_DIR = (
     environ.Path(__file__) - 3
@@ -13,8 +12,8 @@ ROOT_DIR = (
 APPS_DIR = ROOT_DIR.path("movie_planet")
 
 env = environ.Env()
-OMDB_API_KEY = env('OMDb_APIKEY')
-OMDB_URL = env('OMDb_URL')
+OMDB_API_KEY = env("OMDb_APIKEY")
+OMDB_URL = env("OMDb_URL")
 READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=False)
 if READ_DOT_ENV_FILE:
     # OS environment variables take precedence over variables from .env
@@ -66,14 +65,9 @@ DJANGO_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.admin",
 ]
-THIRD_PARTY_APPS = [
-    "rest_framework",
-    "django_filters",
-]
+THIRD_PARTY_APPS = ["rest_framework", "django_filters"]
 
-LOCAL_APPS = [
-    "movie_planet.movies",
-]
+LOCAL_APPS = ["movie_planet.movies"]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
@@ -238,7 +232,5 @@ LOGGING = {
 
 # DRF
 REST_FRAMEWORK = {
-    'DEFAULT_FILTER_BACKENDS': (
-        'django_filters.rest_framework.DjangoFilterBackend',
-    ),
+    "DEFAULT_FILTER_BACKENDS": ("django_filters.rest_framework.DjangoFilterBackend",)
 }
