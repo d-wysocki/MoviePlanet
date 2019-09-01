@@ -1,6 +1,6 @@
 from factory import DjangoModelFactory, Sequence, SubFactory
 
-from movie_planet.movies.models import Movie, Comment
+from movie_planet.movies.models import Comment, Movie
 
 
 class MovieFactory(DjangoModelFactory):

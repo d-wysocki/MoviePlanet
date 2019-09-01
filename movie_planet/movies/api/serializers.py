@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from movie_planet.movies.models import Movie, Comment
+
+from movie_planet.movies.models import Comment, Movie
 
 MODEL_FIELDS = {
     "imdbRating": "imdb_rating",
@@ -10,8 +11,6 @@ MODEL_FIELDS = {
 
 
 class MovieSerializer(serializers.ModelSerializer):
-    year = serializers.DateField(input_formats=["%Y"], format="%Y", required=False)
-
     def to_internal_value(self, data):
         mapped_fields = {
             value: data[key]
@@ -24,7 +23,19 @@ class MovieSerializer(serializers.ModelSerializer):
             if value != "N/A" or key in MODEL_FIELDS.keys()
         }
         data.update(mapped_fields)
+
+        imdb_rating = data.get("imdb_rating")
+        if imdb_rating:
+            data["imdb_rating"] = self.cast_to_number(imdb_rating, float)
+
         return super(MovieSerializer, self).to_internal_value(data)
+
+    @staticmethod
+    def cast_to_number(string, number_type):
+        try:
+            return number_type(string)
+        except ValueError:
+            return None
 
     class Meta:
         model = Movie

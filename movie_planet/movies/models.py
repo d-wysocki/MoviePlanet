@@ -1,5 +1,5 @@
-from django.db import models
 from django.contrib.postgres.fields import JSONField
+from django.db import models
 
 
 class CreatedAtMixin(models.Model):
@@ -10,8 +10,8 @@ class CreatedAtMixin(models.Model):
 
 
 class Movie(CreatedAtMixin, models.Model):
-    title = models.CharField(blank=False,null=False,max_length=255)
-    year = models.DateField(null=True, blank=True)
+    title = models.CharField(blank=False, null=False, max_length=255)
+    year = models.CharField(null=True, blank=True, max_length=15)
     rated = models.CharField(null=True, blank=True, max_length=255)
     released = models.CharField(null=True, blank=True, max_length=255)
     runtime = models.CharField(null=True, blank=True, max_length=255)
@@ -26,7 +26,9 @@ class Movie(CreatedAtMixin, models.Model):
     poster = models.CharField(null=True, blank=True, max_length=255)
     ratings = JSONField(null=True, blank=True)
     metascore = models.CharField(null=True, blank=True, max_length=255)
-    imdb_rating = models.CharField(null=True, blank=True, max_length=255)
+    imdb_rating = models.DecimalField(
+        null=True, blank=True, decimal_places=2, max_digits=10
+    )
     imdb_votes = models.CharField(null=True, blank=True, max_length=255)
     imdb_id = models.CharField(null=True, blank=True, max_length=255)
     type = models.CharField(null=True, blank=True, max_length=255)

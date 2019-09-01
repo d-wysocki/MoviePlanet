@@ -1,7 +1,7 @@
 Movie Planet
 ============
 
-Simple API with movies, comments and ranking.
+Simple API with movies, comments and ranking. MoviePlanet is using OMDb API for fetching movies.
 
 .. image:: https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg
      :target: https://github.com/pydanny/cookiecutter-django/
@@ -13,85 +13,49 @@ Simple API with movies, comments and ranking.
 
 :License: MIT
 
+Prerequisites
+--------------
+* Docker
+* Docker Compose
 
-Settings
---------
-
-Moved to settings_.
-
-.. _settings: http://cookiecutter-django.readthedocs.io/en/latest/settings.html
-
-Basic Commands
+Basic
 --------------
 
-Setting Up Your Users
-^^^^^^^^^^^^^^^^^^^^^
+Setting Up Your Project
+^^^^^^^^^^^^^^^^^^^^^^^
 
-* To create a **normal user account**, just go to Sign Up and fill out the form. Once you submit it, you'll see a "Verify Your E-mail Address" page. Go to your console to see a simulated email verification message. Copy the link into your browser. Now the user's email should be verified and ready to go.
 
-* To create an **superuser account**, use this command::
+* To run postgres database, use this command::
 
-    $ python manage.py createsuperuser
+    $ docker-compose -f local.yml up -d postgres
 
-For convenience, you can keep your normal user logged in on Chrome and your superuser logged in on Firefox (or similar), so that you can see how the site behaves for both kinds of users.
+* To run migrations, use this command::
 
-Type checks
-^^^^^^^^^^^
+    $ docker-compose -f local.yml run --rm --no-deps --service-ports django python manage.py migrate
 
-Running type checks with mypy:
+* To run application, use this command::
 
-::
-
-  $ mypy movie_planet
+    $ docker-compose -f local.yml run --rm --no-deps --service-ports django
 
 Test coverage
 ^^^^^^^^^^^^^
 
-To run the tests, check your test coverage, and generate an HTML coverage report::
+To run the tests, check your test coverage::
 
-    $ coverage run -m pytest
-    $ coverage html
-    $ open htmlcov/index.html
+    $ docker-compose -f local.yml run django coverage run -m pytest
+    $ docker-compose -f local.yml run django coverage report
 
 Running tests with py.test
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
-  $ pytest
+  $ docker-compose -f local.yml run django pytest
 
-Live reloading and Sass CSS compilation
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Postman Collection
+^^^^^^^^^^^^^^^^^^
 
-Moved to `Live reloading and SASS compilation`_.
+::
 
-.. _`Live reloading and SASS compilation`: http://cookiecutter-django.readthedocs.io/en/latest/live-reloading-and-sass-compilation.html
-
-
-
-
-
-Deployment
-----------
-
-The following details how to deploy this application.
-
-
-Heroku
-^^^^^^
-
-See detailed `cookiecutter-django Heroku documentation`_.
-
-.. _`cookiecutter-django Heroku documentation`: http://cookiecutter-django.readthedocs.io/en/latest/deployment-on-heroku.html
-
-
-
-Docker
-^^^^^^
-
-See detailed `cookiecutter-django Docker documentation`_.
-
-.. _`cookiecutter-django Docker documentation`: http://cookiecutter-django.readthedocs.io/en/latest/deployment-with-docker.html
-
-
+    * postman collection can be found in `/movie_planet/postman/` directory
 

@@ -1,11 +1,7 @@
 import pytest
 from rest_framework.exceptions import ErrorDetail
 
-from movie_planet.movies.api.serializers import (
-    CommentSerializer,
-    MovieSerializer,
-    TopMovieSerializer,
-)
+from movie_planet.movies.api.serializers import CommentSerializer, MovieSerializer, TopMovieSerializer
 
 pytestmark = pytest.mark.django_db
 
@@ -25,7 +21,7 @@ class TestMovieSerializer:
 
         result = serializer.to_internal_value(data)
 
-        assert result["imdb_rating"] == "1"
+        assert result["imdb_rating"] == 1.00
         assert result["imdb_votes"] == "1"
         assert result["imdb_id"] == "1"
         assert result["box_office"] == "1"
@@ -43,20 +39,17 @@ class TestMovieSerializer:
         assert result["year"] == "1994"
 
     def test_invalid(self):
-        data = {"Year": "1994-03-11"}
-        serializer = MovieSerializer(data=data)
+        serializer = MovieSerializer(data={})
 
         serializer.is_valid()
-
         assert serializer.errors == {
-            "year": [
-                ErrorDetail(
-                    string="Date has wrong format. Use one of these formats instead: YYYY.",
-                    code="invalid",
-                )
-            ],
             "title": [ErrorDetail(string="This field is required.", code="required")],
         }
+
+    def test_cast_to_number(self):
+        assert MovieSerializer.cast_to_number('45.44', float) == 45.44
+        assert MovieSerializer.cast_to_number('some', float) is None
+        assert MovieSerializer.cast_to_number('33', int) == 33
 
 
 class TestCommentSerializer:
