@@ -6,7 +6,11 @@ from rest_framework.exceptions import ErrorDetail
 
 from movie_planet.movies.api.serializers import CommentSerializer, TopMovieSerializer
 from movie_planet.movies.api.views import CommentsViewSet, MoviesViewSet, TopViewSet
-from movie_planet.movies.factories import CommentFactory, MovieFactory, create_movies_with_rank
+from movie_planet.movies.factories import (
+    CommentFactory,
+    MovieFactory,
+    create_movies_with_rank,
+)
 from movie_planet.movies.utils import prepare_date_range
 
 pytestmark = pytest.mark.django_db
@@ -140,7 +144,6 @@ class TestCommentsViewSet:
 
 class TestTopViewSet:
     def test_list(self, request_factory):
-        from_date = to_date = datetime.today().date()
         movie_1, movie_2, movie_3 = create_movies_with_rank()
         expected_data = [
             {"movie_id": movie_2.id, "total_comments": 2, "rank": 1},
@@ -148,6 +151,19 @@ class TestTopViewSet:
             {"movie_id": movie_1.id, "total_comments": 1, "rank": 2},
         ]
         view = TopViewSet.as_view({"get": "list"})
+
+        request = request_factory.get(
+            "/fake-url/", {"from_date": "20-20-20", "to_date": "20-20-20"}
+        )
+
+        result = view(request)
+
+        assert result.status_code == 400
+        assert result.data == {
+            "error": "time data '20-20-20' does not match format '%Y-%m-%d'"
+        }
+
+        from_date = to_date = datetime.today().date()
         request = request_factory.get(
             "/fake-url/", {"from_date": from_date, "to_date": to_date}
         )
@@ -193,3 +209,17 @@ class TestTopViewSet:
 
         assert movie_1.id not in result
         assert movie_2.id in result
+
+    def test_validate_date_range_params(self):
+
+        with pytest.raises(ValueError):
+            TopViewSet.validate_date_range_params({})
+
+        from_date = "2910-10-10"
+        to_date = "2910-10-10"
+
+        result = TopViewSet.validate_date_range_params(
+            {"from_date": from_date, "to_date": to_date}
+        )
+
+        assert result == prepare_date_range(from_date, to_date)

@@ -24,7 +24,7 @@ class MovieSerializer(serializers.ModelSerializer):
         }
         data.update(mapped_fields)
 
-        imdb_rating = data["imdb_rating"]
+        imdb_rating = data.get("imdb_rating")
         if imdb_rating:
             data["imdb_rating"] = self.cast_to_number(imdb_rating, float)
 
