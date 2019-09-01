@@ -12,8 +12,7 @@ ROOT_DIR = (
 APPS_DIR = ROOT_DIR.path("movie_planet")
 
 env = environ.Env()
-OMDB_API_KEY = env("OMDb_APIKEY")
-OMDB_URL = env("OMDb_URL")
+
 READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=False)
 if READ_DOT_ENV_FILE:
     # OS environment variables take precedence over variables from .env
@@ -109,6 +108,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/dev/ref/settings/#middleware
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -234,3 +234,7 @@ LOGGING = {
 REST_FRAMEWORK = {
     "DEFAULT_FILTER_BACKENDS": ("django_filters.rest_framework.DjangoFilterBackend",)
 }
+
+# OMDB API
+OMDB_API_KEY = env("OMDb_APIKEY")
+OMDB_URL = env("OMDb_URL")

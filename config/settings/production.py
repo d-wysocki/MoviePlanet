@@ -49,6 +49,7 @@ SECURE_CONTENT_TYPE_NOSNIFF = env.bool(
 
 # MEDIA
 # ------------------------------------------------------------------------------
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # TEMPLATES
 # ------------------------------------------------------------------------------
