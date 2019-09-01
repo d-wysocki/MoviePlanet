@@ -1,0 +1,225 @@
+{
+	"info": {
+		"_postman_id": "43bcb240-29f9-4b68-853b-01d1734459be",
+		"name": "Movie Planet",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "post movie",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"title\":\"batman\"}"
+				},
+				"url": {
+					"raw": "{{movieplanet-url}}/api/movies/",
+					"host": [
+						"{{movieplanet-url}}"
+					],
+					"path": [
+						"api",
+						"movies",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all movies",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{movieplanet-url}}/api/movies/",
+					"host": [
+						"{{movieplanet-url}}"
+					],
+					"path": [
+						"api",
+						"movies",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post comment",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"movie\":1,\n\t\"body\": \"test comment\"\n}"
+				},
+				"url": {
+					"raw": "{{movieplanet-url}}/api/comments/",
+					"host": [
+						"{{movieplanet-url}}"
+					],
+					"path": [
+						"api",
+						"comments",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all commnets",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{movieplanet-url}}/api/comments/",
+					"host": [
+						"{{movieplanet-url}}"
+					],
+					"path": [
+						"api",
+						"comments",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "filter comments by movie id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{movieplanet-url}}/api/comments/?movie=1",
+					"host": [
+						"{{movieplanet-url}}"
+					],
+					"path": [
+						"api",
+						"comments",
+						""
+					],
+					"query": [
+						{
+							"key": "movie",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get top movies in specific date range",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{movieplanet-url}}/api/top/?from_date=2019-09-01&to_date=2019-09-01",
+					"host": [
+						"{{movieplanet-url}}"
+					],
+					"path": [
+						"api",
+						"top",
+						""
+					],
+					"query": [
+						{
+							"key": "from_date",
+							"value": "2019-09-01"
+						},
+						{
+							"key": "to_date",
+							"value": "2019-09-01"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "order movies by imdb_rating",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{movieplanet-url}}/api/movies/?ordering=imdb_rating",
+					"host": [
+						"{{movieplanet-url}}"
+					],
+					"path": [
+						"api",
+						"movies",
+						""
+					],
+					"query": [
+						{
+							"key": "ordering",
+							"value": "imdb_rating"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "filter movies by type",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{movieplanet-url}}/api/movies/?type=movie",
+					"host": [
+						"{{movieplanet-url}}"
+					],
+					"path": [
+						"api",
+						"movies",
+						""
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "movie"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
