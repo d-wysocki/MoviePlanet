@@ -28,7 +28,7 @@ jobs:
           key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
       - run: 
           command: |
-            pipenv run python manage.py test --settings=config.settings.test
+            pipenv run django pytest --ds "config.settings.test"
       - store_test_results:
           path: test-results
       - store_artifacts:
